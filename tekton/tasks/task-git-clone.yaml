@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: git-clone
+  namespace: hola-mundo
+spec:
+  params:
+    - name: url
+      description: "URL del repositorio a clonar"
+    - name: revision
+      description: "Rama o commit a clonar"
+      default: "main"
+  workspaces:
+    - name: output
+  steps:
+    - name: clone
+      image: alpine/git:latest
+      script: |
+        #!/bin/sh
+        set -e
+        rm -rf $(workspaces.output.path)/* $(workspaces.output.path)/.[!.]* 2>/dev/null || true
+        git clone --branch $(params.revision) $(params.url) $(workspaces.output.path)
+        echo "Clonado correctamente:"
+        ls -la $(workspaces.output.path)

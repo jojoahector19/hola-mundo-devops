@@ -1,6 +1,7 @@
 #!/bin/bash
 # Dispara manualmente los pipelines de Tekton (build + push + actualizar manifest)
 set -e
+kubectl apply -f ../tekton/tasks/task-git-clone.yaml
 kubectl apply -f ../tekton/tasks/task-build-push.yaml
 kubectl apply -f ../tekton/tasks/task-update-manifest.yaml
 kubectl apply -f ../tekton/pipeline-backend.yaml

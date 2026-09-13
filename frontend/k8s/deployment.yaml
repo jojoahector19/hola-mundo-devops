@@ -17,5 +17,6 @@ spec:
         - name: frontend
           # Esta imagen la construye y actualiza el pipeline de Tekton
           image: k3d-registry.localhost:5000/hola-mundo-frontend:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80

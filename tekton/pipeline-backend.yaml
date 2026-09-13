@@ -38,19 +38,10 @@ spec:
         - name: CONTEXT_DIR
           value: "backend"
 
-    - name: update-manifest
+    - name: deploy
       taskRef:
-        name: update-manifest
+        name: deploy
       runAfter: ["build-push"]
-      workspaces:
-        - name: source
-          workspace: shared-workspace
       params:
-        - name: DEPLOYMENT_FILE
-          value: "backend/k8s/deployment.yaml"
-        - name: IMAGE
-          value: $(params.IMAGE)
-        - name: GIT_REPO_URL
-          value: $(params.GIT_REPO_URL)
-        - name: GIT_BRANCH
-          value: $(params.GIT_REVISION)
+        - name: DEPLOYMENT_NAME
+          value: "backend"

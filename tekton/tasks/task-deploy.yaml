@@ -1,0 +1,19 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: deploy
+  namespace: hola-mundo
+spec:
+  params:
+    - name: DEPLOYMENT_NAME
+      description: "Nombre del Deployment a reiniciar (backend o frontend)"
+    - name: NAMESPACE
+      default: "hola-mundo"
+  steps:
+    - name: rollout-restart
+      image: bitnami/kubectl:latest
+      script: |
+        #!/bin/sh
+        set -e
+        kubectl rollout restart deployment/$(params.DEPLOYMENT_NAME) -n $(params.NAMESPACE)
+        kubectl rollout status deployment/$(params.DEPLOYMENT_NAME) -n $(params.NAMESPACE) --timeout=120s

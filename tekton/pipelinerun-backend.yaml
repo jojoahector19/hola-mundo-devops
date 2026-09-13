@@ -4,6 +4,7 @@ metadata:
   generateName: pipeline-backend-run-
   namespace: hola-mundo
 spec:
+  serviceAccountName: pipeline-deployer
   pipelineRef:
     name: pipeline-backend
   params:

@@ -3,8 +3,9 @@
 set -e
 kubectl apply -f ../tekton/tasks/task-git-clone.yaml
 kubectl apply -f ../tekton/tasks/task-git-clone.yaml
+kubectl apply -f ../tekton/tasks/rbac-deploy.yaml
 kubectl apply -f ../tekton/tasks/task-build-push.yaml
-kubectl apply -f ../tekton/tasks/task-update-manifest.yaml
+kubectl apply -f ../tekton/tasks/task-deploy.yaml
 kubectl apply -f ../tekton/pipeline-backend.yaml
 kubectl apply -f ../tekton/pipeline-frontend.yaml
 

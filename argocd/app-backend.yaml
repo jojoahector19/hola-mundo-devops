@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: backend
+  namespace: argocd
+spec:
+  project: hola-mundo
+  source:
+    repoURL: 'https://github.com/jojoahector19/hola-mundo-devops.git'
+    targetRevision: main
+    path: backend/k8s
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: hola-mundo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -1,0 +1,57 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: pipeline-frontend
+  namespace: hola-mundo
+spec:
+  params:
+    - name: GIT_REPO_URL
+    - name: GIT_REVISION
+      default: "main"
+    - name: IMAGE
+      default: "localhost:5000/hola-mundo-frontend:latest"
+  workspaces:
+    - name: shared-workspace
+  tasks:
+    - name: fetch-source
+      taskRef:
+        name: git-clone
+        kind: ClusterTask
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+      params:
+        - name: url
+          value: $(params.GIT_REPO_URL)
+        - name: revision
+          value: $(params.GIT_REVISION)
+
+    - name: build-push
+      taskRef:
+        name: build-and-push
+      runAfter: ["fetch-source"]
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+      params:
+        - name: IMAGE
+          value: $(params.IMAGE)
+        - name: CONTEXT_DIR
+          value: "frontend"
+
+    - name: update-manifest
+      taskRef:
+        name: update-manifest
+      runAfter: ["build-push"]
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+      params:
+        - name: DEPLOYMENT_FILE
+          value: "frontend/k8s/deployment.yaml"
+        - name: IMAGE
+          value: $(params.IMAGE)
+        - name: GIT_REPO_URL
+          value: $(params.GIT_REPO_URL)
+        - name: GIT_BRANCH
+          value: $(params.GIT_REVISION)

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: hola-mundo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          # Esta imagen la construye y actualiza el pipeline de Tekton
+          image: localhost:5000/hola-mundo-frontend:latest
+          ports:
+            - containerPort: 80

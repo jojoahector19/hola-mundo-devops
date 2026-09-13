@@ -1,0 +1,26 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: build-and-push
+  namespace: hola-mundo
+spec:
+  params:
+    - name: IMAGE
+      description: "Imagen destino, ej localhost:5000/hola-mundo-backend:latest"
+    - name: CONTEXT_DIR
+      description: "Carpeta del Dockerfile dentro del repo (backend o frontend)"
+  workspaces:
+    - name: source
+  steps:
+    - name: build-and-push
+      image: gcr.io/kaniko-project/executor:latest
+      env:
+        # Necesario para push a un registro local sin TLS
+        - name: DOCKER_CONFIG
+          value: /tekton/home/.docker
+      args:
+        - --dockerfile=$(workspaces.source.path)/$(params.CONTEXT_DIR)/Dockerfile
+        - --context=$(workspaces.source.path)/$(params.CONTEXT_DIR)
+        - --destination=$(params.IMAGE)
+        - --insecure
+        - --skip-tls-verify

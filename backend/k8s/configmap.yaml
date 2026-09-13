@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+  namespace: hola-mundo
+data:
+  # Cambia este valor a "release" para el ambiente de release
+  ENVIRONMENT: "develop"
+  PGHOST: "postgres-service"
+  PGPORT: "5432"
+  PGDATABASE: "holamundo"
+  PGUSER: "holamundo_user"

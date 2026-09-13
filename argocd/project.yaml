@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: hola-mundo
+  namespace: argocd
+spec:
+  sourceRepos:
+    - 'https://github.com/jojoahector19/hola-mundo-devops.git'
+  destinations:
+    - namespace: hola-mundo
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'

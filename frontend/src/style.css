@@ -1,0 +1,18 @@
+body {
+  font-family: -apple-system, Arial, sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+.card {
+  background: #1e293b;
+  padding: 2.5rem 3rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+.env { opacity: 0.7; font-size: 0.9rem; }

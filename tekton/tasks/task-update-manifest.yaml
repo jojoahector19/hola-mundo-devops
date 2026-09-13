@@ -1,0 +1,32 @@
+apiVersion: tekton.dev/v1
+kind: Task
+metadata:
+  name: update-manifest
+  namespace: hola-mundo
+spec:
+  description: >
+    Actualiza el tag de imagen en el manifiesto k8s y hace commit/push
+    para que ArgoCD detecte el cambio (patron GitOps).
+  params:
+    - name: DEPLOYMENT_FILE
+      description: "Ruta relativa, ej backend/k8s/deployment.yaml"
+    - name: IMAGE
+      description: "Imagen con el nuevo tag"
+    - name: GIT_REPO_URL
+    - name: GIT_BRANCH
+      default: "main"
+  workspaces:
+    - name: source
+  steps:
+    - name: update-and-push
+      image: alpine/git:latest
+      script: |
+        #!/bin/sh
+        set -e
+        cd $(workspaces.source.path)
+        sed -i "s#image: .*#image: $(params.IMAGE)#" $(params.DEPLOYMENT_FILE)
+        git config user.email "tekton@hola-mundo.local"
+        git config user.name "tekton-ci"
+        git add $(params.DEPLOYMENT_FILE)
+        git commit -m "ci: actualiza imagen a $(params.IMAGE) [skip ci]" || echo "sin cambios"
+        git push origin $(params.GIT_BRANCH)

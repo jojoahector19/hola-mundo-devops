@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  generateName: pipeline-backend-run-
+  namespace: hola-mundo
+spec:
+  pipelineRef:
+    name: pipeline-backend
+  params:
+    - name: GIT_REPO_URL
+      value: "https://github.com/jojoahector19/hola-mundo-devops.git"
+    - name: GIT_REVISION
+      value: "main"
+    - name: IMAGE
+      value: "localhost:5000/hola-mundo-backend:latest"
+  workspaces:
+    - name: shared-workspace
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 1Gi

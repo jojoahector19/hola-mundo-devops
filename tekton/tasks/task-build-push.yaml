@@ -6,7 +6,7 @@ metadata:
 spec:
   params:
     - name: IMAGE
-      description: "Imagen destino, ej localhost:5000/hola-mundo-backend:latest"
+      description: "Imagen destino, ej k3d-registry.localhost:5000/hola-mundo-backend:latest"
     - name: CONTEXT_DIR
       description: "Carpeta del Dockerfile dentro del repo (backend o frontend)"
   workspaces:

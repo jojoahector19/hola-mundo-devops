@@ -9,7 +9,7 @@ spec:
     - name: GIT_REVISION
       default: "main"
     - name: IMAGE
-      default: "localhost:5000/hola-mundo-backend:latest"
+      default: "k3d-registry.localhost:5000/hola-mundo-backend:latest"
   workspaces:
     - name: shared-workspace
   tasks:

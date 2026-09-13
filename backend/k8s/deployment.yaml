@@ -16,7 +16,7 @@ spec:
       containers:
         - name: backend
           # Esta imagen la construye y actualiza el pipeline de Tekton
-          image: localhost:5000/hola-mundo-backend:latest
+          image: k3d-registry.localhost:5000/hola-mundo-backend:latest
           ports:
             - containerPort: 3000
           envFrom:

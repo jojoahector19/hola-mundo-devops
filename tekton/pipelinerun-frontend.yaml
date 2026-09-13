@@ -12,7 +12,7 @@ spec:
     - name: GIT_REVISION
       value: "main"
     - name: IMAGE
-      value: "localhost:5000/hola-mundo-frontend:latest"
+      value: "k3d-registry.localhost:5000/hola-mundo-frontend:latest"
   workspaces:
     - name: shared-workspace
       volumeClaimTemplate:

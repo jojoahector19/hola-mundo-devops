@@ -5,7 +5,7 @@ metadata:
   namespace: hola-mundo
 data:
   # Cambia este valor a "release" para el ambiente de release
-  ENVIRONMENT: "develop"
+  ENVIRONMENT: "release"
   PGHOST: "postgres-service"
   PGPORT: "5432"
   PGDATABASE: "holamundo"
